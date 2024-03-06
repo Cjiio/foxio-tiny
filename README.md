@@ -16,27 +16,30 @@
   - [获取SDK](#获取sdk)
   - [编译](#编译)
   - [SD卡烧录](#sd卡烧录)
-- [关于算能](#关于算能)
-- [技术论坛](#技术论坛)
+- [其他编译注意事项](#其他编译注意事项)
 
 <br>
 
 # 项目简介
-- 本仓库提供[算能科技](https://www.sophgo.com/)端侧芯片`CV181x`和`CV180x`两个系列芯片的软件开发包(SDK)。
-- 主要适用于官方EVB
+- 本仓库提供芯片`CV181x`和`CV180x`两个系列芯片(兼容`SG2002-CV1812CP`,`SG2000-CV1812H`)的软件开发包(SDK)。
+- 主要适用于官方EVB和Milkv-Duo、Milkv Duo256。
 
 <br>
 
 ## 硬件资料
-- [《CV180xB EVB板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/14/14/CV180xB_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
-- [《CV180xC EVB板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/18/18/CV180xC_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
-- [《CV181xC EVB板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/15/14/CV181xC_QFN_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
-- [《CV181xH EVB板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/15/15/CV181xH_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
+- [《CV180xB 开发板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/14/14/CV180xB_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
+- [《CV180xC 开发板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/18/18/CV180xC_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
+- [《CV181xC 开发板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/15/14/CV181xC_QFN_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
+- [《CV181xH 开发板硬件指南》](https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/15/15/CV181xH_EVB%E6%9D%BF%E7%A1%AC%E4%BB%B6%E6%8C%87%E5%8D%97_V1.0.pdf)
+- [《SDK 开发文档汇总》](https://developer.sophgo.com/thread/471.html)
+- [《HDK 开发文档汇总》](https://developer.sophgo.com/thread/472.html)
 
 <br>
 
 ## 芯片规格
 - [芯片产品简介](https://www.sophgo.com/product/index.html)
+- [SG2000](https://milkv.io/zh/chips/sg2000)
+- [SG2002](https://milkv.io/zh/chips/sg2002)
 <br><br>
 
 # SDK目录结构
@@ -60,66 +63,31 @@
 # 快速开始
 
 ## 准备编译环境
-- 在虚拟机上安装一个ubuntu系统，或者使用本地的ubuntu系统，推荐`Ubuntu 20.04 LTS`
+- 在虚拟机上安装一个ubuntu系统，或者使用本地的ubuntu系统，推荐`Ubuntu 22.04 LTS`
 - 安装串口工具： `mobarXterm` 或者 `xshell` 或者其他
 - 安装编译依赖的工具:
 ```
-sudo apt install pkg-config
-sudo apt install build-essential
-sudo apt install ninja-build
-sudo apt install automake
-sudo apt install autoconf
-sudo apt install libtool
-sudo apt install wget
-sudo apt install curl
-sudo apt install git
-sudo apt install gcc
-sudo apt install libssl-dev
-sudo apt install bc
-sudo apt install slib
-sudo apt install squashfs-tools
-sudo apt install android-sdk-libsparse-utils
-sudo apt install android-sdk-ext4-utils
-sudo apt install jq
-sudo apt install cmake
-sudo apt install python3-distutils
-sudo apt install tclsh
-sudo apt install scons
-sudo apt install parallel
-sudo apt install ssh-client
-sudo apt install tree
-sudo apt install python3-dev
-sudo apt install python3-pip
-sudo apt install device-tree-compiler
-sudo apt install libssl-dev
-sudo apt install ssh
-sudo apt install cpio
-sudo apt install squashfs-tools
-sudo apt install fakeroot
-sudo apt install libncurses5
-sudo apt install flex
-sudo apt install bison
+sudo apt install -y pkg-config build-essential ninja-build automake autoconf libtool wget curl git gcc libssl-dev bc slib squashfs-tools android-sdk-libsparse-utils jq python3-distutils scons parallel tree python3-dev python3-pip device-tree-compiler ssh cpio fakeroot libncurses5 flex bison libncurses5-dev genext2fs rsync unzip dosfstools mtools tcl openssh-client cmake expect
 ```
 *注意：cmake版本最低要求3.16.5*
 
 ## 获取SDK
 ```
-git clone https://github.com/sophgo/sophpi.git
-cd sophpi
-./scripts/repo_clone.sh --gitclone scripts/subtree.xml
+git clone https://github.com/cjiio/foxiopi.git --depth=1
+cd foxiopi
 ```
 
 ## 编译
-- 以 `cv1812h_wevb_0007a_emmc`为例
+- 以 `cv1812cp_foxio_tiny_spinand`为例
 ```
 source build/cvisetup.sh
-defconfig cv1812h_wevb_0007a_emmc
+defconfig cv1812cp_foxio_tiny_spinand
 build_all
 ```
 - 编译成功后可以在`install`目录下看到生成的image
 
 ## SD卡烧录
-- 接好EVB板的串口线
+- 接好开发板的串口线
 - 将SD卡格式化成FAT32格式
 - 将`install`目录下的image放入SD卡根目录
 ```
@@ -182,13 +150,14 @@ mars_c906#
 
 <br><br>
 
-# 关于算能
 
-**算能致力于成为全球领先的通用算力提供商。<br>
-算能专注于AI、RISC-V CPU等算力产品的研发和推广应用，以自研产品为核心打造了覆盖“云、边、端”的全场景应用矩阵 ，为城市大脑、智算中心、智慧安防、智慧交通、安全生产、工业质检、智能终端等应用提供算力产品及整体解决方案 。公司在北京、上海、深圳、青岛、厦门等国内 10 多个城市及美国、新加坡等国家设有研发中心。**
-- [官方网站](https://www.sophgo.com/)
-
-# 技术论坛
-- [技术讨论 - 开源硬件sophpi](https://developer.sophgo.com/forum/index/25/51.html)
-
-
+# 其他编译注意事项
+- 如果您想尝试在以上两种环境之外的环境下编译本 SDK，下面是可能需要注意的事项，仅供参考。
+- 如果您希望使用 WSL 执行编译，则构建镜像时会遇到一个小问题，WSL 中的 $PATH 具有 Windows 环境变量，其中路径之间包含一些空格。
+- 要解决此问题，您需要更改 `/etc/wsl.conf` 文件并添加以下行：
+```
+[interop]
+appendWindowsPath = false
+```
+- 然后需要使用 `wsl.exe --reboot` 重新启动 WSL。再运行编译命令。
+- 要恢复 `/etc/wsl.conf` 文件中的此更改，请将 `appendWindowsPath` 设置为 `true`。 要重新启动 WSL，您可以使用 `Windows PowerShell` 命令 `wsl.exe --shutdown`，然后使用`wsl.exe`，之后 Windows 环境变量在 `$PATH` 中再次可用。
